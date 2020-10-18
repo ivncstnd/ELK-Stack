@@ -1,0 +1,37 @@
+---
+  - name: Installing ELK container
+    hosts: elk
+    become: true
+    tasks:
+
+    - name: Increasing virtual memory
+      command: sysctl -w vm.max_map_count=262144
+
+    - name: Installing docker engine
+      apt:
+        update_cache: yes
+        force_apt_get: yes
+        name: docker.io
+        state: present
+
+    - name: Installing python3-pip
+      apt:
+        name: python3-pip
+        state: present
+        force_apt_get: yes
+
+    - name: Installing docker client
+      pip:
+        name: docker
+        state: present
+
+    - name: Installing ELK container
+      docker_container:
+        name: elk
+        image: sebp/elk:761
+        state: started
+        restart_policy: always
+        published_ports:
+          - 5601:5601
+          - 9200:9200
+          - 5044:5044
