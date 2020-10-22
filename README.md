@@ -31,4 +31,29 @@ The configuration details of each machine can be found below.
 
 ### Access Policies
 
-The machines on the internal network are not exposed to the public Internet
+The machines on the internal network are not exposed to the public Internet. The Jumpbox is the only virtual machine that accepts internet connections. Additionally, machines within the network can only be accessed by the Jumpbox. 
+
+
+### Ansible Usage
+
+To utilize Ansible and Ansible playbooks, the Docker engine needs to be installed within the Jumpbox. 
+Within the Jumpbox enviroment, update and install docker:
+
+'''
+$ sudo apt-get update
+$ sudo apt-get upgrade
+$ sudo apt install docker.io
+'''
+
+After the installation, check and enable docker on the system:
+
+'''
+$ sudo systemctl start docker
+$ sudo systemctl enable docker
+'''
+
+
+### Elk Stack Configuration
+
+
+
