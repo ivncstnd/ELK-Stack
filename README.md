@@ -39,18 +39,18 @@ The machines on the internal network are not exposed to the public Internet. The
 To utilize Ansible and Ansible playbooks, the Docker engine needs to be installed within the Jumpbox. 
 Within the Jumpbox enviroment, update and install docker:
 
-'''
+```
 $ sudo apt-get update
 $ sudo apt-get upgrade
 $ sudo apt install docker.io
-'''
+```
 
 After the installation, check and enable docker on the system:
 
-'''
+```
 $ sudo systemctl start docker
 $ sudo systemctl enable docker
-'''
+```
 
 
 ### Elk Stack Configuration
