@@ -97,7 +97,7 @@ $ nano /etc/ansible/ansible.cfg
 
 remote_user = [username]
 ```
-With Ansible configured with the web servers, download and install YAML files located in Ansible folder:
+With Ansible configured with the web servers, download and run YAML files located in Ansible folder:
 
 ```
 $ ansible-playbook install-dvwa.yml
@@ -107,5 +107,32 @@ Each playbook installs the programs and prerequistes needed to run those program
 
 ### Elk Stack Configuration
 
+Installing Filebeat and Metricbeat on the web servers will allow the ELK server to collect and log server data. 
+The first step to configure the beats is to install filebeat-config.yml and metricbeat-config.yml within the Ansible container using curl and copy into /etc/ansible/files:
+
+```
+$ curl https://gist.githubusercontent.com/slape/5cc350109583af6cbe577bbcc0710c93/raw/eca603b72586fbe148c11f9c87bf96a63cb25760/Filebeat > /etc/ansible/files/filebeat-config.yml
+$ curl https://gist.githubusercontent.com/slape/58541585cc1886d2e26cd8be557ce04c/raw/0ce2c7e744c54513616966affb5e9d96f5e12f73/metricbeat > /etc/ansible/files/metricbeat-config.yml
+```
+Within the filebeat-config.yml and metricbeat-config.yml, nano within to configure host IP and username/password and Kibana IP address:
+
+```
+output.elasticsearch:
+hosts: ["10.1.0.4:9200"]
+username: "elastic"
+password: "changeme"
+
+...
+
+setup.kibana:
+host: "10.1.0.4:5601"
+```
+
+Finally, download and run YAML playbooks to complete the beat setups:
+
+```
+$ ansible-playbook install-filebeat.yml
+$ ansible-playbook install-metricbeat.yml
+```
 
 
