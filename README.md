@@ -33,7 +33,6 @@ The configuration details of each machine can be found below.
 
 The machines on the internal network are not exposed to the public Internet. The Jumpbox is the only virtual machine that accepts internet connections. Additionally, machines within the network can only be accessed by the Jumpbox. Access policies are controlled within Azure's security groups. Port configurations applied are Deny All Inbound with port 22 exceptions for administration.
 
-
 ### Ansible Usage
 
 To utilize Ansible and Ansible playbooks, the Docker engine needs to be installed within the Jumpbox. 
@@ -51,7 +50,7 @@ After the installation, check and enable docker on the system:
 $ sudo systemctl start docker
 $ sudo systemctl enable docker
 ```
-Now that docker is installed, install the ansible repository and run the container:
+Now that docker is installed, install the Ansible repository and run the container:
 
 ```
 $ sudo docker pull cyberxsecurity/ansible
@@ -64,15 +63,18 @@ Create a SSH key with default filepath and copy the public key to each virtual m
 $ ssh-keygen
 $ cat ~/.ssh/id_rsa.pub
 ```
-After establishing connections to the web servers, they must be added to ansible's host file:
+After establishing connections to the web servers, they must be added to Ansible's host file:
 
 ```
 $ nano /etc/ansible/hosts
 ```
-Uncomment [webservers] in located in /etc/ansible/hosts.
+Uncomment [webservers] in located in /etc/ansible/hosts. In addition, add [elk].
 Add web server internal IP addresses including the ansible python interpreter path:
 
 ```
+[elk]
+10.1.0.x ansible_python_interpreter=/usr/bin/python3
+
 [webservers]
 10.0.0.x ansible_python_interpreter=/usr/bin/python3
 10.0.0.x ansible_python_interpreter=/usr/bin/python3
@@ -82,11 +84,17 @@ Add web server internal IP addresses including the ansible python interpreter pa
 Edit the remote username to each web server:
 
 ```
-nano /etc/ansible/ansible.cfg
+$ nano /etc/ansible/ansible.cfg
 
 remote_user = [username]
 ```
+With Ansible configured with the web servers, download and install YAML files located in Ansible folder:
 
+```
+$ ansible-playbook install-dvwa.yml
+$ ansible-playbook install-elk.yml
+```
+Each playbook installs the programs and prerequistes needed to run those programs. This is applied to each specified server declared in the YAML file.
 
 ### Elk Stack Configuration
 
