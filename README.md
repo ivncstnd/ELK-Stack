@@ -33,6 +33,15 @@ The configuration details of each machine can be found below.
 
 The machines on the internal network are not exposed to the public Internet. The Jumpbox is the only virtual machine that accepts internet connections. Additionally, machines within the network can only be accessed by the Jumpbox. Access policies are controlled within Azure's security groups. Port configurations applied are Deny All Inbound with port 22 exceptions for administration.
 
+| Priority |              Name             | Port | Protocol |       Source      |   Destination  | Action |
+|:--------:|:-----------------------------:|:----:|:--------:|:-----------------:|:--------------:|:------:|
+|   4093   |          HTTPInbound          |  80  |    Any   |   Workstation IP  |       Any      |  Allow |
+|   4094   |        JumpboxAllowSSH        |  22  |    Any   |      10.0.0.4     | VirtualNetwork |  Allow |
+|   4095   |            AllowSSH           |  22  |    Any   |   Workstation IP  |       Any      |  Allow |
+|   65000  |        AllowVnetInbound       |  Any |    Any   |   VirtualNetwork  | VirtualNetwork |  Allow |
+|   65001  | AllowAzureLoadBalancerInbound |  Any |    Any   | AzureLoadBalancer |       Any      |  Allow |
+|   65500  |         DenyAllInbound        |  Any |    Any   |        Any        |       Any      |  Deny  |
+
 ### Ansible Usage
 
 To utilize Ansible and Ansible playbooks, the Docker engine needs to be installed within the Jumpbox. 
