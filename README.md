@@ -31,7 +31,7 @@ The configuration details of each machine can be found below.
 
 ### Access Policies
 
-The machines on the internal network are not exposed to the public Internet. The Jumpbox is the only virtual machine that accepts internet connections. Additionally, machines within the network can only be accessed by the Jumpbox. 
+The machines on the internal network are not exposed to the public Internet. The Jumpbox is the only virtual machine that accepts internet connections. Additionally, machines within the network can only be accessed by the Jumpbox. Access policies are controlled within Azure's security groups. Port configurations applied are Deny All Inbound with port 22 exceptions for administration.
 
 
 ### Ansible Usage
@@ -50,6 +50,41 @@ After the installation, check and enable docker on the system:
 ```
 $ sudo systemctl start docker
 $ sudo systemctl enable docker
+```
+Now that docker is installed, install the ansible repository and run the container:
+
+```
+$ sudo docker pull cyberxsecurity/ansible
+$ docker run -ti cyberxsecurity/ansible:latest bash
+```
+Because Ansible will handle the web applications on each internal machine, an SSH key is required to connect to the machines.
+Create a SSH key with default filepath and copy the public key to each virtual machine in Azure:
+
+```
+$ ssh-keygen
+$ cat ~/.ssh/id_rsa.pub
+```
+After establishing connections to the web servers, they must be added to ansible's host file:
+
+```
+$ nano /etc/ansible/hosts
+```
+Uncomment [webservers] in located in /etc/ansible/hosts.
+Add web server internal IP addresses including the ansible python interpreter path:
+
+```
+[webservers]
+10.0.0.x ansible_python_interpreter=/usr/bin/python3
+10.0.0.x ansible_python_interpreter=/usr/bin/python3
+10.0.0.x ansible_python_interpreter=/usr/bin/python3
+...
+```
+Edit the remote username to each web server:
+
+```
+nano /etc/ansible/ansible.cfg
+
+remote_user = [username]
 ```
 
 
