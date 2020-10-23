@@ -1,7 +1,7 @@
 ## Automated ELK Stack Deployment Project
 Files used in this repository were used to create and configure the network below.
 
-(network_diagram)
+![alt text](https://github.com/ivncstnd/ELKStackProject/blob/main/Diagram/ELK-Stack.png)
 
 This document discusses the following:
 - Description of the Toplogy
