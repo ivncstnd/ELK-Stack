@@ -11,7 +11,7 @@ This document discusses the following:
   - Virtual machines monitoring
   - Configuring Beats
 
-### Discription of the Toplogy
+### Description of the Toplogy
 
 The toplogy was built using Microsoft's Azure Cloud services. With given computational tools, the main purpose of this network is to expose a load-balanced and monitored instance of DVWA, the Damn Vulnerable Web Application. 
 
