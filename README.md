@@ -1,4 +1,4 @@
-## Automated ELK Stack Deployment
+### Automated ELK Stack Deployment
 The files used in this repository were used to create and configure the network below.
 
 ![alt text](https://github.com/ivncstnd/ELKStackProject/blob/main/Diagram/ELK-Stack.png)
